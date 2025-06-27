@@ -26,6 +26,15 @@ function degrees_to_radians(degrees) {
   return degrees * (pi/180);
 }
 
+// create a white line in the middle of the court
+function createCenterLine() {
+  const lineMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+  const centerLineGeometry = new THREE.BoxGeometry(0.1, 0.01, 15);
+  const centerLine = new THREE.Mesh(centerLineGeometry, lineMaterial);
+  centerLine.position.y = 0.105; // Slightly above the court to prevent z-fighting
+  scene.add(centerLine);
+}
+
 // Create basketball court
 function createBasketballCourt() {
   // Court floor - just a simple brown surface
@@ -37,6 +46,8 @@ function createBasketballCourt() {
   const court = new THREE.Mesh(courtGeometry, courtMaterial);
   court.receiveShadow = true;
   scene.add(court);
+  
+  createCenterLine();
   
   // Note: All court lines, hoops, and other elements have been removed
   // Students will need to implement these features
