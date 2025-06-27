@@ -45,10 +45,35 @@ function createCenterCircle() {
   scene.add(circle);
 }
 
+// create a three point line
+function createThreePointLine(x_pos, rotation_z) {
+  const radius = 6.75;
+  const lineWidth = 0.05;
+  const arc = Math.PI;
+
+  const geometry = new THREE.RingGeometry(radius - lineWidth, radius + lineWidth, 64, 1, -Math.PI / 2, arc);
+  const material = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+  const threePointArc = new THREE.Mesh(geometry, material);
+
+  threePointArc.position.y = 0.115;
+  threePointArc.position.x = x_pos;
+
+  threePointArc.rotation.x = -Math.PI / 2;
+  threePointArc.rotation.z = rotation_z;
+
+  scene.add(threePointArc);
+}
+
 // creates the court lines
 function createCourtLines() {
   createCenterLine();
   createCenterCircle();
+
+  const hoopPosX = 15 - 1.575; // Position of the hoop from the center
+
+  // Create three-point lines for both sides
+  createThreePointLine(hoopPosX, Math.PI);
+  createThreePointLine(-hoopPosX, 0);
 }
 // Create basketball court
 function createBasketballCourt() {
