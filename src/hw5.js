@@ -185,6 +185,40 @@ function createHoops() {
   createHoop(-hoopX, 0);
 }
 
+// Create a static basketball
+function createBasketball() {
+    const ballGroup = new THREE.Group();
+    const ballRadius = 0.122; // Regulation size
+    const seamThickness = 0.004;
+    const seamRadius = ballRadius + 0.001; // Place seams slightly above the ball's surface
+
+    // Ball
+    const ballMaterial = new THREE.MeshPhongMaterial({ color: 0xD35400, shininess: 50 });
+    const ballGeometry = new THREE.SphereGeometry(ballRadius, 32, 32);
+    const basketball = new THREE.Mesh(ballGeometry, ballMaterial);
+    basketball.castShadow = true;
+    ballGroup.add(basketball);
+
+    // Seams
+    const seamMaterial = new THREE.MeshBasicMaterial({ color: 0x000000 });
+    const seamGeometry = new THREE.TorusGeometry(seamRadius, seamThickness, 8, 100);
+
+    // Seam in XZ plane (horizontal)
+    const seamXZ = new THREE.Mesh(seamGeometry.clone(), seamMaterial);
+    seamXZ.rotation.x = Math.PI / 2;
+    ballGroup.add(seamXZ);
+
+    // Rotated vertical seams
+    for (let i = 0; i < 3; i++) {
+        const seam = new THREE.Mesh(seamGeometry.clone(), seamMaterial);
+        seam.rotation.y = (i * Math.PI) / 3;
+        ballGroup.add(seam);
+    }
+    
+    ballGroup.position.y = ballRadius + 0.1;
+    scene.add(ballGroup);
+}
+
 // Create basketball court
 function createBasketballCourt() {
   // Court floor - just a simple brown surface
@@ -198,6 +232,7 @@ function createBasketballCourt() {
   scene.add(court);
   createCourtLines();
   createHoops();
+  createBasketball();
   
   
   // Note: All court lines, hoops, and other elements have been removed
