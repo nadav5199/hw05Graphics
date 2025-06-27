@@ -87,6 +87,7 @@ function createBackboard() {
   const backboard = new THREE.Mesh(backboardGeometry, backboardMaterial);
   backboard.position.y = 3.35; // Centered above the rim
   backboard.castShadow = true;
+  backboard.receiveShadow = true;
   return backboard;
 }
 
@@ -98,6 +99,7 @@ function createRim() {
   rim.position.x = 0.2286 + 0.025; // In front of backboard
   rim.rotation.x = Math.PI / 2; // Corrected rotation to be parallel to the court
   rim.castShadow = true;
+  rim.receiveShadow = true;
   return rim;
 }
 
@@ -144,6 +146,7 @@ function createSupportStructure(backboardPosition) {
     pole.position.y = 2.0;
     pole.position.x = -0.5; // Behind backboard
     pole.castShadow = true;
+    pole.receiveShadow = true;
     supportGroup.add(pole);
 
     // Support Arm
@@ -153,6 +156,7 @@ function createSupportStructure(backboardPosition) {
     arm.position.y = backboardPosition.y;
     arm.position.x = pole.position.x / 2; // Position between pole and backboard
     arm.castShadow = true;
+    arm.receiveShadow = true;
     supportGroup.add(arm);
     return supportGroup;
 }
@@ -197,6 +201,7 @@ function createBasketball() {
     const ballGeometry = new THREE.SphereGeometry(ballRadius, 32, 32);
     const basketball = new THREE.Mesh(ballGeometry, ballMaterial);
     basketball.castShadow = true;
+    basketball.receiveShadow = true;
     ballGroup.add(basketball);
 
     // Seams
@@ -229,6 +234,7 @@ function createBasketballCourt() {
   });
   const court = new THREE.Mesh(courtGeometry, courtMaterial);
   court.receiveShadow = true;
+  court.castShadow = true;
   scene.add(court);
   createCourtLines();
   createHoops();
