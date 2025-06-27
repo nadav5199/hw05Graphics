@@ -224,6 +224,38 @@ function createBasketball() {
     scene.add(ballGroup);
 }
 
+// Sets up the UI elements like score and controls
+function setupUI() {
+    // Score display placeholder
+    const scoreElement = document.createElement('div');
+    scoreElement.id = 'score-display';
+    scoreElement.style.position = 'absolute';
+    scoreElement.style.top = '20px';
+    scoreElement.style.width = '100%';
+    scoreElement.style.textAlign = 'center';
+    scoreElement.style.color = 'white';
+    scoreElement.style.fontSize = '24px';
+    scoreElement.style.fontFamily = 'Arial, sans-serif';
+    scoreElement.innerHTML = 'Home: 0 - Guest: 0';
+    document.body.appendChild(scoreElement);
+
+    // Controls display placeholder
+    const controlsElement = document.createElement('div');
+    controlsElement.id = 'controls-display';
+    controlsElement.style.position = 'absolute';
+    controlsElement.style.bottom = '20px';
+    controlsElement.style.left = '20px';
+    controlsElement.style.color = 'white';
+    controlsElement.style.fontSize = '16px';
+    controlsElement.style.fontFamily = 'Arial, sans-serif';
+    controlsElement.style.textAlign = 'left';
+    controlsElement.innerHTML = `
+      <h3>Controls:</h3>
+      <p>O - Toggle orbit camera</p>
+    `;
+    document.body.appendChild(controlsElement);
+}
+
 // Create basketball court
 function createBasketballCourt() {
   // Court floor - just a simple brown surface
@@ -247,6 +279,7 @@ function createBasketballCourt() {
 
 // Create all elements
 createBasketballCourt();
+setupUI();
 
 // Set camera position for better view
 const cameraTranslate = new THREE.Matrix4();
@@ -256,21 +289,6 @@ camera.applyMatrix4(cameraTranslate);
 // Orbit controls
 const controls = new OrbitControls(camera, renderer.domElement);
 let isOrbitEnabled = true;
-
-// Instructions display
-const instructionsElement = document.createElement('div');
-instructionsElement.style.position = 'absolute';
-instructionsElement.style.bottom = '20px';
-instructionsElement.style.left = '20px';
-instructionsElement.style.color = 'white';
-instructionsElement.style.fontSize = '16px';
-instructionsElement.style.fontFamily = 'Arial, sans-serif';
-instructionsElement.style.textAlign = 'left';
-instructionsElement.innerHTML = `
-  <h3>Controls:</h3>
-  <p>O - Toggle orbit camera</p>
-`;
-document.body.appendChild(instructionsElement);
 
 // Handle key events
 function handleKeyDown(e) {
