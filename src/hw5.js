@@ -35,6 +35,21 @@ function createCenterLine() {
   scene.add(centerLine);
 }
 
+// create a white circle in the middle of the court
+function createCenterCircle() {
+  const geometry = new THREE.RingGeometry(1.75, 1.8, 64);
+  const material = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+  const circle = new THREE.Mesh(geometry, material);
+  circle.position.y = 0.11;
+  circle.rotation.x = -Math.PI / 2;
+  scene.add(circle);
+}
+
+// creates the court lines
+function createCourtLines() {
+  createCenterLine();
+  createCenterCircle();
+}
 // Create basketball court
 function createBasketballCourt() {
   // Court floor - just a simple brown surface
@@ -46,8 +61,8 @@ function createBasketballCourt() {
   const court = new THREE.Mesh(courtGeometry, courtMaterial);
   court.receiveShadow = true;
   scene.add(court);
+  createCourtLines();
   
-  createCenterLine();
   
   // Note: All court lines, hoops, and other elements have been removed
   // Students will need to implement these features
